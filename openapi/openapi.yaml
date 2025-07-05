@@ -4,6 +4,8 @@ openapi: 3.1.0
 info:
   title: MSG Shooting Target System REST API
   version: 1.0.0
+  license:
+    name: MIT
   description: |
     This is the REST API for the MSG Shooting Target System, which allows users to manage shooting programs,
     audio files, and target visibility. The API provides endpoints for uploading programs, managing series and
@@ -16,6 +18,7 @@ paths:
   /programs:
     get:
       summary: List all programs
+      operationId: listPrograms
       responses:
         "200":
           description: List of available programs with ID, title, and description
@@ -34,9 +37,12 @@ paths:
                       type: string
                     readonly:
                       type: boolean
+        "400":
+          description: Bad request
 
     post:
       summary: Upload a new program
+      operationId: uploadProgram
       requestBody:
         required: true
         content:
@@ -59,6 +65,7 @@ paths:
   /programs/{id}:
     get:
       summary: Get a specific program
+      operationId: getProgram
       parameters:
         - in: path
           name: id
@@ -74,10 +81,13 @@ paths:
                 $ref: "#/components/schemas/Program"
         "404":
           description: Program not found
+        "400":
+          description: Invalid ID
 
   /programs/{id}/load:
     post:
       summary: Load a specific program
+      operationId: loadProgram
       parameters:
         - in: path
           name: id
@@ -89,10 +99,13 @@ paths:
           description: Program loaded
         "404":
           description: Program ID not found
+        "400":
+          description: Invalid ID
 
   /programs/start:
     post:
       summary: Start next series
+      operationId: startNextSeries
       responses:
         "200":
           description: Series started
@@ -102,6 +115,7 @@ paths:
   /programs/stop:
     post:
       summary: Stop current series
+      operationId: stopCurrentSeries
       responses:
         "200":
           description: Series stopped
@@ -111,6 +125,7 @@ paths:
   /programs/series/{series_index}/skip_to:
     post:
       summary: Skip to a specific series in the program
+      operationId: skipToSeries
       parameters:
         - in: path
           name: series_index
@@ -126,6 +141,7 @@ paths:
   /programs/{id}/delete:
     delete:
       summary: Delete a program by ID
+      operationId: deleteProgram
       parameters:
         - in: path
           name: id
@@ -143,6 +159,7 @@ paths:
   /status:
     get:
       summary: Get current program and target status
+      operationId: getStatus
       responses:
         "200":
           description: Current program and target state
@@ -150,10 +167,13 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ProgramStatus"
+        "400":
+          description: Bad request
 
   /audios:
     get:
       summary: List all audios
+      operationId: listAudios
       responses:
         "200":
           description: Built-in and uploaded audio files
@@ -166,9 +186,12 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/Audio"
+        "400":
+          description: Bad request
 
     post:
       summary: Upload a new audio file
+      operationId: uploadAudio
       requestBody:
         required: true
         content:
@@ -200,10 +223,13 @@ paths:
                     type: integer
         "415":
           description: Unsupported Media Type — invalid audio format
+        "400":
+          description: Invalid audio upload
 
   /audios/{id}/delete:
     delete:
       summary: Delete an audio file by ID
+      operationId: deleteAudio
       parameters:
         - name: id
           in: path
@@ -221,24 +247,32 @@ paths:
   /targets/show:
     post:
       summary: Show the target
+      operationId: showTarget
       responses:
         "200":
           description: Target is now shown
+        "400":
+          description: Bad request
 
   /targets/hide:
     post:
       summary: Hide the target
+      operationId: hideTarget
       responses:
         "200":
           description: Target is now hidden
+        "400":
+          description: Bad request
 
   /targets/toggle:
     post:
       summary: Toggle the target visibility
+      operationId: toggleTarget
       responses:
         "200":
           description: Target visibility toggled
-
+        "400":
+          description: Bad request
 components:
   schemas:
     Audio:
@@ -327,7 +361,7 @@ components:
         running:
           type: boolean
         next_event:
-          type: object
+          type: [object, "null"]
           description: Optional. Present only if a next event is known.
           required:
             - program_id
@@ -340,11 +374,9 @@ components:
               type: integer
             event_index:
               type: integer
-          nullable: true
         target_status:
-          type: string
+          type: [string, "null"]
           enum: [shown, hidden]
-          nullable: true
 
     ProgramUpload:
       type: object
@@ -361,3 +393,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Series"
+
+security:
+  - {}
