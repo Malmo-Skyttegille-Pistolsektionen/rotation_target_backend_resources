@@ -1,0 +1,220 @@
+# yaml-language-server: $schema=https://spec.openapis.org/oas/3.1/schema/2022-10-07
+
+openapi: 3.1.0
+info:
+  title: MSG Shooting Target System SSE Events
+  version: 1.0.0
+  description: |
+    Server-Sent Events (SSE) stream for MSG Shooting Target System.
+    This endpoint emits events as documented below.
+  license:
+    name: MIT
+    identifier: MIT
+    
+servers:
+  - url: http://localhost:8080/sse/v1
+    description: SSE endpoint base URL
+
+security:
+  - {}
+
+paths:
+  /sse:
+    get:
+      summary: Subscribe to server-sent events
+      operationId: subscribeSSE
+      description: |
+        Stream of events related to program, series, audio, and target status.
+      tags:
+        - SSE
+      responses:
+        "200":
+          description: Stream of server-sent events
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/SSE"
+        "400":
+          description: Bad request                
+
+components:
+  schemas:              
+    SSE:
+        oneOf:
+            - $ref: "#/components/schemas/program_added"
+            - $ref: "#/components/schemas/program_deleted"
+            - $ref: "#/components/schemas/program_started"
+            - $ref: "#/components/schemas/program_completed"
+            - $ref: "#/components/schemas/series_started"
+            - $ref: "#/components/schemas/series_stopped"
+            - $ref: "#/components/schemas/event_started"
+            - $ref: "#/components/schemas/series_completed"
+            - $ref: "#/components/schemas/series_next"
+            - $ref: "#/components/schemas/target_status"
+            - $ref: "#/components/schemas/audio_added"
+            - $ref: "#/components/schemas/audio_deleted"
+            - $ref: "#/components/schemas/chrono_ms"
+            
+    program_added:
+      type: object
+      properties:
+        event:
+          type: string
+          enum: [program_added]
+        data:
+          type: object
+          properties:
+            program_id:
+              type: integer
+    program_deleted:
+      type: object
+      properties:
+        event:
+          type: string
+          enum: [program_deleted]
+        data:
+          type: object
+          properties:
+            program_id:
+              type: integer
+    program_started:
+      type: object
+      properties:
+        event:
+          type: string
+          enum: [program_started]
+        data:
+          type: object
+          properties:
+            program_id:
+              type: integer
+    program_completed:
+      type: object
+      properties:
+        event:
+          type: string
+          enum: [program_completed]
+        data:
+          type: object
+          properties:
+            program_id:
+              type: integer
+    series_started:
+      type: object
+      properties:
+        event:
+          type: string
+          enum: [series_started]
+        data:
+          type: object
+          properties:
+            program_id:
+              type: integer
+            series_index:
+              type: integer
+    series_stopped:
+      type: object
+      properties:
+        event:
+          type: string
+          enum: [series_stopped]
+        data:
+          type: object
+          properties:
+            program_id:
+              type: integer
+            series_index:
+              type: integer
+            event_index:
+              type: integer
+    event_started:
+      type: object
+      properties:
+        event:
+          type: string
+          enum: [event_started]
+        data:
+          type: object
+          properties:
+            program_id:
+              type: integer
+            series_index:
+              type: integer
+            event_index:
+              type: integer
+    series_completed:
+      type: object
+      properties:
+        event:
+          type: string
+          enum: [series_completed]
+        data:
+          type: object
+          properties:
+            program_id:
+              type: integer
+            series_index:
+              type: integer
+    series_next:
+      type: object
+      properties:
+        event:
+          type: string
+          enum: [series_next]
+        data:
+          type: object
+          properties:
+            program_id:
+              type: integer
+            series_index:
+              type: integer
+    target_status:
+      type: object
+      properties:
+        event:
+          type: string
+          enum: [target_status]
+        data:
+          type: object
+          properties:
+            status:
+              type: string
+              enum: [shown, hidden]
+    audio_added:
+      type: object
+      properties:
+        event:
+          type: string
+          enum: [audio_added]
+        data:
+          type: object
+          properties:
+            audio_id:
+              type: integer
+    audio_deleted:
+      type: object
+      properties:
+        event:
+          type: string
+          enum: [audio_deleted]
+        data:
+          type: object
+          properties:
+            audio_id:
+              type: integer
+    chrono_ms:
+      type: object
+      properties:
+        event:
+          type: string
+          enum: [chrono_ms]
+        data:
+          type: object
+          properties:
+            elapsed:
+              type: integer
+            remaining:
+              type: integer
+            total:
+              type: integer
+
