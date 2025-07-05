@@ -4,16 +4,19 @@ openapi: 3.1.0
 info:
   title: MSG Shooting Target System REST API
   version: 1.0.0
-  license:
-    name: MIT
-    identifier: MIT
   description: |
     This is the REST API for the MSG Shooting Target System, which allows users to manage shooting programs,
     audio files, and target visibility. The API provides endpoints for uploading programs, managing series and
+  license:
+    name: MIT
+    identifier: MIT
 
 servers:
   - url: http://localhost:8080/api/v1
     description: Base URL for version 1 of the API
+
+security:
+  - {}
 
 paths:
   /programs:
@@ -394,6 +397,3 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Series"
-
-security:
-  - {}
