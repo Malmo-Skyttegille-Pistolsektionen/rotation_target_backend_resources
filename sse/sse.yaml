@@ -10,7 +10,7 @@ info:
   license:
     name: MIT
     identifier: MIT
-    
+
 servers:
   - url: http://localhost:8080/sse/v1
     description: SSE endpoint base URL
@@ -35,26 +35,27 @@ paths:
               schema:
                 $ref: "#/components/schemas/SSE"
         "400":
-          description: Bad request                
+          description: Bad request
 
 components:
-  schemas:              
+  schemas:
     SSE:
-        oneOf:
-            - $ref: "#/components/schemas/program_added"
-            - $ref: "#/components/schemas/program_deleted"
-            - $ref: "#/components/schemas/program_started"
-            - $ref: "#/components/schemas/program_completed"
-            - $ref: "#/components/schemas/series_started"
-            - $ref: "#/components/schemas/series_stopped"
-            - $ref: "#/components/schemas/event_started"
-            - $ref: "#/components/schemas/series_completed"
-            - $ref: "#/components/schemas/series_next"
-            - $ref: "#/components/schemas/target_status"
-            - $ref: "#/components/schemas/audio_added"
-            - $ref: "#/components/schemas/audio_deleted"
-            - $ref: "#/components/schemas/chrono_ms"
-            
+      oneOf:
+        - $ref: "#/components/schemas/program_added"
+        - $ref: "#/components/schemas/program_deleted"
+        - $ref: "#/components/schemas/program_started"
+        - $ref: "#/components/schemas/program_completed"
+        - $ref: "#/components/schemas/series_started"
+        - $ref: "#/components/schemas/series_stopped"
+        - $ref: "#/components/schemas/event_started"
+        - $ref: "#/components/schemas/series_completed"
+        - $ref: "#/components/schemas/series_next"
+        - $ref: "#/components/schemas/target_status"
+        - $ref: "#/components/schemas/audio_added"
+        - $ref: "#/components/schemas/audio_deleted"
+        - $ref: "#/components/schemas/chrono_ms"
+        - $ref: "#/components/schemas/admin_mode_status" # <-- Added here
+
     program_added:
       type: object
       properties:
@@ -217,4 +218,17 @@ components:
               type: integer
             total:
               type: integer
-
+    admin_mode_status:
+      type: object
+      properties:
+        event:
+          type: string
+          enum: [admin_mode_status]
+        data:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+      required:
+        - event
+        - data
