@@ -277,6 +277,72 @@ paths:
           description: Target visibility toggled
         "400":
           description: Bad request
+
+  /admin-mode/status:
+    get:
+      summary: Get admin mode status
+      operationId: getAdminModeStatus
+      responses:
+        "200":
+          description: Returns whether admin mode is enabled or disabled
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  enabled:
+                    type: boolean
+        "400":
+          description: Bad request
+        "401":
+          description: Unauthorized
+
+  /admin-mode/enable:
+    post:
+      summary: Enable admin mode
+      operationId: enableAdminMode
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - password
+              properties:
+                password:
+                  type: string
+                  description: Password required to enable admin mode
+      responses:
+        "200":
+          description: Admin mode enabled, returns OAuth bearer token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: OAuth bearer token for admin actions
+        "400":
+          description: Bad request
+        "401":
+          description: Unauthorized
+
+  /admin-mode/disable:
+    post:
+      summary: Disable admin mode
+      operationId: disableAdminMode
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Admin mode disabled
+        "400":
+          description: Bad request
+        "401":
+          description: Unauthorized
+
 components:
   schemas:
     Audio:
