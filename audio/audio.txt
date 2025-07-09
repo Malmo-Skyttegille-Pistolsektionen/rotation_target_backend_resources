@@ -1,0 +1,57 @@
+    Serie
+    Provserie
+    Serie nummer 1
+    Serie nummer 2
+    Serie nummer 3
+    Serie nummer 4
+    Serie nummer 5
+    Serie nummer 6
+    Serie nummer 7
+    Serie nummer 8
+    Serie nummer 9
+    Serie nummer 10
+    Serie nummer 11
+    Serie nummer 12
+    Omskjutning
+    Färdigskjutning 1
+    Färdigskjutning 2
+    Färdigskjutning 1 10 sekunder
+    Färdigskjutning 2 10 sekunder
+    Färdigskjutning 1 8 sekunder
+    Färdigskjutning 2 8 sekunder
+    Färdigskjutning 1 6 sekunder
+    Färdigskjutning 2 6 sekunder
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    10
+    11
+    12
+    13
+    14
+    15
+    16
+    17
+    18
+    19
+    20
+    10 sekunder
+    8 sekunder
+    6 sekunder
+    Ladda!
+    Färdiga!
+    *Färdiga
+    Eld!
+    Eld upphör!
+    *Eld upphör
+    10 sekunder kvar!
+    Några funktionsfel?
+    Patron ur, proppa och lägg ned vapnet!
+    Patron ur, proppa vapen!
+    Visitation
