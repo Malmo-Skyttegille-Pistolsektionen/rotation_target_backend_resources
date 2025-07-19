@@ -3,6 +3,7 @@
 import os
 import wave
 import json
+from pathlib import Path
 from google import genai
 from google.genai import types
 
@@ -87,11 +88,6 @@ def generate(messages):
                     rate=24000,
                     sample_width=2,
                 )
-                # Add entry to index
-                index[value["filename"]] = {
-                    "title": value["text"],
-                    "filename": filename,
-                }
             else:
                 print(f"Error: No inline_data found for {filename}")
         else:
@@ -99,9 +95,9 @@ def generate(messages):
 
 
 if __name__ == "__main__":
-    START_FROM = 38
+    START_FROM_ID = 90
     # Load messages from index.json
     with open("index.json", "r", encoding="utf-8") as f:
         messages = json.load(f)
-        filtered = {k: v for k, v in messages.items() if int(k) >= START_FROM}
+        filtered = {k: v for k, v in messages.items() if int(k) >= START_FROM_ID}
         generate(filtered)
