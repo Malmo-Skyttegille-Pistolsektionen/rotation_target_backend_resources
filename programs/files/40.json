@@ -38,7 +38,7 @@
           "duration": 3000
         }
       ],
-      "name": "Series 1 (x=3, y=3)",
+      "name": "Series 1 (show=3, hide=3)",
       "optional": false
     },
     {
@@ -75,7 +75,7 @@
           "duration": 3000
         }
       ],
-      "name": "Series 2 (x=2, y=3)",
+      "name": "Series 2 (show=2, hide=3)",
       "optional": false
     }
   ]
